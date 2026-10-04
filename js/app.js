@@ -5,10 +5,10 @@
     const taskCount = document.getElementById("task-count");
     const clearBtn = document.getElementById("clear-completed");
     const filterBtns = document.querySelectorAll(".filter-btn");
-    let todos = JSON.parse(localStorage.getItem("todos")) || [];
+    let todos = JSON.parse(localStorage.getItem(APP_CONFIG.storageKey)) || [];
     let currentFilter = "all";
 
-    function saveTodos() { localStorage.setItem("todos", JSON.stringify(todos)); }
+    function saveTodos() { localStorage.setItem(APP_CONFIG.storageKey, JSON.stringify(todos)); }
 
     function renderTodos() {
         list.innerHTML = "";
@@ -79,5 +79,10 @@
             renderTodos();
         });
     });
+
+    if (APP_CONFIG.enableDebugLogging) {
+        console.log(`[${APP_CONFIG.environment}] Todo app loaded`);
+    }
+
     renderTodos();
 });
