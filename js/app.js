@@ -2,7 +2,11 @@
     const input = document.getElementById("todo-input");
     const addBtn = document.getElementById("add-btn");
     const list = document.getElementById("todo-list");
-    let todos = [];
+    let todos = JSON.parse(localStorage.getItem("todos")) || [];
+
+    function saveTodos() {
+        localStorage.setItem("todos", JSON.stringify(todos));
+    }
 
     function renderTodos() {
         list.innerHTML = "";
@@ -30,19 +34,23 @@
         if (!text) return;
         todos.push({ text, completed: false });
         input.value = "";
+        saveTodos();
         renderTodos();
     }
 
     function toggleComplete(index) {
         todos[index].completed = !todos[index].completed;
+        saveTodos();
         renderTodos();
     }
 
     function deleteTodo(index) {
         todos.splice(index, 1);
+        saveTodos();
         renderTodos();
     }
 
     addBtn.addEventListener("click", addTodo);
     input.addEventListener("keypress", (e) => { if (e.key === "Enter") addTodo(); });
+    renderTodos();
 });
