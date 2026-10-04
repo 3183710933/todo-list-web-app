@@ -2,7 +2,6 @@
     const input = document.getElementById("todo-input");
     const addBtn = document.getElementById("add-btn");
     const list = document.getElementById("todo-list");
-
     let todos = [];
 
     function renderTodos() {
@@ -16,8 +15,12 @@
             checkbox.addEventListener("change", () => toggleComplete(index));
             const span = document.createElement("span");
             span.textContent = todo.text;
+            const delBtn = document.createElement("button");
+            delBtn.textContent = "x";
+            delBtn.addEventListener("click", () => deleteTodo(index));
             li.appendChild(checkbox);
             li.appendChild(span);
+            li.appendChild(delBtn);
             list.appendChild(li);
         });
     }
@@ -32,6 +35,11 @@
 
     function toggleComplete(index) {
         todos[index].completed = !todos[index].completed;
+        renderTodos();
+    }
+
+    function deleteTodo(index) {
+        todos.splice(index, 1);
         renderTodos();
     }
 
